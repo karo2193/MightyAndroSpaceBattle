@@ -3,11 +3,17 @@ package com.mightyandrospacebattle;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by Michal on 21.06.2017.
  */
 
 public class Player extends SpaceObject {
+
+    private final int MAX_BULLETS = 4;
+
+    private ArrayList<Bullet> bullets;
 
     private float[] flamex;
     private float[] flamey;
@@ -17,7 +23,10 @@ public class Player extends SpaceObject {
     private float deceleration;
     private float acceleratingTimer;
 
-    public Player() {
+    public Player(ArrayList<Bullet> bullets ) {
+
+        this.bullets = bullets;
+
         x = MainGame.WIDTH / 2;
         y = MainGame.HEIGHT / 2;
         maxSpeed = 300;
@@ -60,6 +69,16 @@ public class Player extends SpaceObject {
 
         flamex[2] = x + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 5;
         flamey[2] = y + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 5;
+
+    }
+
+    public void shoot() {
+
+        if (bullets.size() == MAX_BULLETS) {
+            return;
+        } else {
+            bullets.add(new Bullet(x, y, radians));
+        }
 
     }
 
