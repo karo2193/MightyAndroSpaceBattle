@@ -23,6 +23,7 @@ public class MainGame extends ApplicationAdapter {
         cam = new OrthographicCamera(WIDTH, HEIGHT);
         cam.translate(WIDTH / 2, HEIGHT / 2);
         cam.update();
+        Gdx.input.setInputProcessor(new GameInputProcessor());
         gsm = new GameStateManager();
 //		batch = new SpriteBatch();
 //		img = new Texture("badlogic.jpg");
