@@ -9,10 +9,13 @@ import com.badlogic.gdx.math.MathUtils;
 
 public class Player extends SpaceObject {
 
+    private float[] flamex;
+    private float[] flamey;
 
     private float maxSpeed;
     private float acceleration;
     private float deceleration;
+    private float acceleratingTimer;
 
     public Player() {
         x = MainGame.WIDTH / 2;
@@ -20,8 +23,12 @@ public class Player extends SpaceObject {
         maxSpeed = 300;
         acceleration = 200;
         deceleration = 10;
+
         shapex = new float[4];
         shapey = new float[4];
+        flamex = new float[3];
+        flamey = new float[3];
+
         radians = (float) Math.PI / 2;
         rotationSpeed = 3;
 
@@ -43,6 +50,19 @@ public class Player extends SpaceObject {
 
     }
 
+    private void setFlame() {
+
+        flamex[0] = x + MathUtils.cos(radians - 5 * MathUtils.PI / 6) * 5;
+        flamey[0] = y + MathUtils.sin(radians - 5 * MathUtils.PI / 6) * 5;
+
+        flamex[1] = x + MathUtils.cos(radians - MathUtils.PI) * (6 + acceleratingTimer * 50);
+        flamey[1] = y + MathUtils.sin(radians - MathUtils.PI) * (6 + acceleratingTimer * 50);
+
+        flamex[2] = x + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 5;
+        flamey[2] = y + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 5;
+
+    }
+
     public void update(float dt) {
         if (AccelerometerReadings.isLeft())
             radians += rotationSpeed * dt;
@@ -51,7 +71,12 @@ public class Player extends SpaceObject {
         if (AccelerometerReadings.isUp()) {
             dx += MathUtils.cos(radians) * acceleration * dt;
             dy += MathUtils.sin(radians) * acceleration * dt;
-
+            acceleratingTimer += dt;
+            if(acceleratingTimer > 0.1f) {
+                acceleratingTimer = 0;
+            }
+        } else {
+            acceleratingTimer = 0;
         }
         float vec = (float) Math.sqrt(dx * dx + dy * dy);
         if (vec > 0) {
@@ -66,6 +91,9 @@ public class Player extends SpaceObject {
         x += dx * dt;
         y += dy * dt;
         setShape();
+        if (AccelerometerReadings.isUp()) {
+            setFlame();
+        }
         wrap();
 
 
@@ -75,8 +103,17 @@ public class Player extends SpaceObject {
         System.out.println("dzieje sie");
         sr.setColor(1, 1, 1, 1);
         sr.begin(ShapeRenderer.ShapeType.Line);
+
+        //draw ship
         for (int i = 0, j = shapex.length - 1; i < shapex.length; j = i++) {
             sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
+        }
+
+        //draw flames
+        if (AccelerometerReadings.isUp()) {
+            for (int i = 0, j = flamex.length - 1; i < flamex.length; j = i++) {
+                sr.line(flamex[i], flamey[i], flamex[j], flamey[j]);
+            }
         }
         sr.end();
 
