@@ -82,6 +82,10 @@ public class Player extends SpaceObject {
 
     }
 
+    public void hit() {
+
+    }
+
     public void update(float dt) {
         if (AccelerometerReadings.isLeft())
             radians += rotationSpeed * dt;
