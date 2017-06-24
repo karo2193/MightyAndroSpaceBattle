@@ -1,8 +1,12 @@
 package com.mightyandrospacebattle;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -23,7 +27,16 @@ public class Player extends SpaceObject {
     private float deceleration;
     private float acceleratingTimer;
 
-    public Player(ArrayList<Bullet> bullets ) {
+    private boolean hit;
+    private boolean dead;
+
+    private float hitTimer;
+    private float hitTime;
+
+    private Line[] hitLines;
+    private Vector2[] hitLinesVector;
+
+    public Player(ArrayList<Bullet> bullets) {
 
         this.bullets = bullets;
 
@@ -37,6 +50,10 @@ public class Player extends SpaceObject {
         shapey = new float[4];
         flamex = new float[3];
         flamey = new float[3];
+
+        hit = false;
+        hitTimer = 0;
+        hitTime = 2;
 
         radians = (float) Math.PI / 2;
         rotationSpeed = 3;
@@ -72,6 +89,15 @@ public class Player extends SpaceObject {
 
     }
 
+    public void reset(){
+        x= MainGame.WIDTH/2;
+        y=MainGame.HEIGHT/2;
+        setShape();
+        hit = false;
+        dead=false;
+
+
+    }
     public void shoot() {
 
         if (bullets.size() == MAX_BULLETS) {
@@ -84,9 +110,59 @@ public class Player extends SpaceObject {
 
     public void hit() {
 
+        if (hit)
+            return;
+        hit = true;
+        dx = 0;
+        dy = 0;
+        hitLines = new Line[4];
+        for (int i = 0, j = hitLines.length - 1; i < hitLines.length; j = i++) {
+            hitLines[i] = new Line(shapex[i], shapey[i], shapex[j], shapey[j]);
+        }
+        hitLinesVector = new Vector2[4];
+        hitLinesVector[0] = new Vector2(
+                MathUtils.cos(radians + 1.5f),
+                MathUtils.sin(radians + 1.5f)
+        );
+        hitLinesVector[1] = new Vector2(
+                MathUtils.cos(radians - 1.5f),
+                MathUtils.sin(radians - 1.5f)
+        );
+        hitLinesVector[2] = new Vector2(
+                MathUtils.cos(radians - 2.8f),
+                MathUtils.sin(radians - 2.8f)
+        );
+        hitLinesVector[3] = new Vector2(
+                MathUtils.cos(radians + 2.8f),
+                MathUtils.sin(radians + 2.8f)
+        );
+
     }
 
     public void update(float dt) {
+
+        //check if hit
+        if(hit){
+            hitTimer+=dt;
+            if(hitTimer>hitTime)
+            {
+                dead = true;
+                hitTimer = 0;
+            }
+            for(int i=0; i<hitLines.length;i++)
+            {
+                hitLines[i] = new Line(
+                     hitLines[i].v1.x+hitLinesVector[i].x*10*dt,
+                        hitLines[i].v1.y+hitLinesVector[i].x*10*dt,
+                        hitLines[i].v2.x+hitLinesVector[i].x*10*dt,
+                        hitLines[i].v2.y+hitLinesVector[i].x*10*dt
+
+                );
+
+            }
+            return;
+        }
+
         if (AccelerometerReadings.isLeft())
             radians += rotationSpeed * dt;
         else if (AccelerometerReadings.isRight())
@@ -95,7 +171,7 @@ public class Player extends SpaceObject {
             dx += MathUtils.cos(radians) * acceleration * dt;
             dy += MathUtils.sin(radians) * acceleration * dt;
             acceleratingTimer += dt;
-            if(acceleratingTimer > 0.1f) {
+            if (acceleratingTimer > 0.1f) {
                 acceleratingTimer = 0;
             }
         } else {
@@ -123,9 +199,23 @@ public class Player extends SpaceObject {
     }
 
     public void draw(ShapeRenderer sr) {
-        System.out.println("dzieje sie");
+
         sr.setColor(1, 1, 1, 1);
         sr.begin(ShapeRenderer.ShapeType.Line);
+        if(hit){
+            for(int i =0; i< hitLines.length; i++){
+                sr.line(hitLines[i].v1.x,
+                        hitLines[i].v1.y,
+                        hitLines[i].v2.x,
+                        hitLines[i].v2.y
+
+                        );
+            }
+            sr.end();
+            return;
+        }
+
+
 
         //draw ship
         for (int i = 0, j = shapex.length - 1; i < shapex.length; j = i++) {
@@ -142,5 +232,12 @@ public class Player extends SpaceObject {
 
     }
 
+    public boolean isHit() {
+        return hit;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
 }
 

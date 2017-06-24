@@ -20,6 +20,8 @@ public class PlayState extends GameState {
     private ArrayList<Bullet> bullets;
     private ArrayList<Asteroid> asteroids;
 
+    private ArrayList<Particle> particles;
+
     private int level;
     private int totalAsteroids;
     private int numAsteroidsLeft;
@@ -37,16 +39,20 @@ public class PlayState extends GameState {
         bullets = new ArrayList<Bullet>();
         player = new Player(bullets);
         asteroids = new ArrayList<Asteroid>();
-        asteroids.add(new Asteroid(100, 100, Asteroid.LARGE));
-        asteroids.add(new Asteroid(200, 200, Asteroid.MEDIUM));
-        asteroids.add(new Asteroid(300, 300, Asteroid.SMALL));
 
+        particles = new ArrayList<Particle>();
         level = 1;
         spawnAsteroids();
 
     }
 
-    private void  spawnAsteroids() {
+    private void createParticles(float x, float y) {
+
+        for (int i = 0; i < 6; i++)
+            particles.add(new Particle(x, y));
+    }
+
+    private void spawnAsteroids() {
 
         asteroids.clear();
 
@@ -81,8 +87,17 @@ public class PlayState extends GameState {
     public void update(float dt) {
 
         //System.out.println("play state update");
-        player.update(dt);
 
+        if (asteroids.size() == 0) {
+            level++;
+            spawnAsteroids();
+
+        }
+        player.update(dt);
+        if (player.isDead()) {
+            player.reset();
+
+        }
         //update player bullets
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).update(dt);
@@ -100,6 +115,15 @@ public class PlayState extends GameState {
                 i--;
             }
         }
+        //update particles
+        for (int i = 0; i < particles.size(); i++) {
+            particles.get(i).update(dt);
+            if (particles.get(i).shouldRemove()) {
+                particles.remove(i);
+                i--;
+            }
+        }
+
 
         //check collision
         checkCollisions();
@@ -109,17 +133,18 @@ public class PlayState extends GameState {
     private void checkCollisions() {
 
         // player - asteroid collision
-        for (int i = 0; i < asteroids.size(); i++) {
-            Asteroid asteroid = asteroids.get(i);
-            if (asteroid.intersects(player)) {
-                player.hit();
-                asteroids.remove(i);
-                i--;
-                splitAsteroids(asteroid);
-                break;
+        if (!player.isHit()) {
+            for (int i = 0; i < asteroids.size(); i++) {
+                Asteroid asteroid = asteroids.get(i);
+                if (asteroid.intersects(player)) {
+                    player.hit();
+                    asteroids.remove(i);
+                    i--;
+                    splitAsteroids(asteroid);
+                    break;
+                }
             }
         }
-
         // bullet - asteroid collision
         for (int i = 0; i < bullets.size(); i++) {
             Bullet bullet = bullets.get(i);
@@ -140,6 +165,7 @@ public class PlayState extends GameState {
 
     private void splitAsteroids(Asteroid a) {
 
+        createParticles(a.getx(), a.gety());
         numAsteroidsLeft--;
         if (a.getType() == Asteroid.LARGE) {
             asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.MEDIUM));
@@ -160,13 +186,19 @@ public class PlayState extends GameState {
         player.draw(sr);
 
         //draw bullets
-        for(int i = 0; i < bullets.size(); i++) {
+        for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).draw(sr);
         }
 
         //draw asteroids
-        for(int i = 0; i < asteroids.size(); i++) {
+        for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).draw(sr);
+        }
+
+        //draw particles
+        for (int i = 0; i < particles.size(); i++) {
+
+            particles.get(i).draw(sr);
         }
 
     }
