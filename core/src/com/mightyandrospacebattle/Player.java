@@ -100,6 +100,11 @@ public class Player extends SpaceObject {
         dead=false;
     }
 
+    public void setPosition(float x, float y) {
+        super.setPosition(x, y);
+        setShape();
+    }
+
     public long getScore() {
         return score;
     }
@@ -222,7 +227,6 @@ public class Player extends SpaceObject {
     }
 
     public void draw(ShapeRenderer sr) {
-
         sr.setColor(1, 1, 1, 1);
         sr.begin(ShapeRenderer.ShapeType.Line);
         if(hit){

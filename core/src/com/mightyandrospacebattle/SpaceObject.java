@@ -34,6 +34,11 @@ public class SpaceObject {
         return shapey;
     }
 
+    public void setPosition(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public boolean intersects(SpaceObject other) {
         float[] sx = other.getShapex();
         float[] sy = other.getShapey();

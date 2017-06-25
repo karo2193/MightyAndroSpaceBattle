@@ -19,6 +19,7 @@ public class PlayState extends GameState {
     private SpriteBatch sb;
     private ShapeRenderer sr;
     private BitmapFont font;
+    private Player hudPlayer;
     private Player player;
     private ArrayList<Bullet> bullets;
     private ArrayList<Asteroid> asteroids;
@@ -49,6 +50,7 @@ public class PlayState extends GameState {
         particles = new ArrayList<Particle>();
         level = 1;
         spawnAsteroids();
+        hudPlayer = new Player(null);
     }
 
     private void initFont() {
@@ -171,11 +173,9 @@ public class PlayState extends GameState {
                 }
             }
         }
-
     }
 
     private void splitAsteroids(Asteroid a) {
-
         createParticles(a.getx(), a.gety());
         numAsteroidsLeft--;
         if (a.getType() == Asteroid.LARGE) {
@@ -186,37 +186,35 @@ public class PlayState extends GameState {
             asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.SMALL));
             asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.SMALL));
         }
-
     }
 
     @Override
     public void draw() {
-
         handleInput();
         //System.out.println("play state draw");
         player.draw(sr);
-
         //draw bullets
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).draw(sr);
         }
-
         //draw asteroids
         for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).draw(sr);
         }
-
         //draw particles
         for (int i = 0; i < particles.size(); i++) {
-
             particles.get(i).draw(sr);
         }
-
         //draw score
         sb.setColor(1, 1, 1, 1);
         sb.begin();
         font.draw(sb, Long.toString(player.getScore()), 40, 700);
         sb.end();
+        //draw lives
+        for (int i = 0; i < player.getExtraLives(); i++) {
+            hudPlayer.setPosition(40 + i * 20, 620);
+            hudPlayer.draw(sr);
+        }
     }
 
     @Override
