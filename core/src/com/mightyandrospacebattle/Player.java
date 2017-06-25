@@ -122,19 +122,14 @@ public class Player extends SpaceObject {
     }
 
     public void shoot() {
-
-        if (bullets.size() == MAX_BULLETS) {
-            return;
-        } else {
-            bullets.add(new Bullet(x, y, radians));
-        }
-
+        if (bullets.size() == MAX_BULLETS) return;
+        bullets.add(new Bullet(x, y, radians));
+        Jukebox.play("shoot");
     }
 
     public void hit() {
 
-        if (hit)
-            return;
+        if (hit) return;
         hit = true;
         dx = 0;
         dy = 0;
@@ -189,6 +184,7 @@ public class Player extends SpaceObject {
         if (score >= requiredScore) {
             extraLives++;
             requiredScore += 10000;
+            Jukebox.play("extralife");
         }
 
         if (AccelerometerReadings.isLeft())
@@ -220,6 +216,9 @@ public class Player extends SpaceObject {
         setShape();
         if (AccelerometerReadings.isUp()) {
             setFlame();
+            //Jukebox.loop("thruster"); + after hit stop sound
+        } else {
+            //Jukebox.stop("thruster");
         }
         wrap();
 
@@ -256,7 +255,6 @@ public class Player extends SpaceObject {
             }
         }
         sr.end();
-
     }
 
     public boolean isHit() {

@@ -4,12 +4,9 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MainGame extends ApplicationAdapter {
-    //	SpriteBatch batch;
-    //	Texture img;
+
     public static int HEIGHT;
     public static int WIDTH;
     public static OrthographicCamera cam;
@@ -24,9 +21,8 @@ public class MainGame extends ApplicationAdapter {
         cam.translate(WIDTH / 2, HEIGHT / 2);
         cam.update();
         Gdx.input.setInputProcessor(new GameInputProcessor());
+        loadSounds();
         gsm = new GameStateManager();
-//		batch = new SpriteBatch();
-//		img = new Texture("badlogic.jpg");
     }
 
     @Override
@@ -35,14 +31,22 @@ public class MainGame extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gsm.update(Gdx.graphics.getDeltaTime());
         gsm.draw();
-//		batch.begin();
-//		batch.draw(img, 0, 0);
-//		batch.end();
     }
 
     @Override
     public void dispose() {
-//		batch.dispose();
-//		img.dispose();
+        // default implementation ignored
+    }
+
+    private void loadSounds() {
+        Jukebox.load("sounds/explode.ogg", "explode");
+        Jukebox.load("sounds/extralife.ogg", "extralife");
+        Jukebox.load("sounds/largesaucer.ogg", "largesaucer");
+        Jukebox.load("sounds/pulsehigh.ogg", "pulsehigh");
+        Jukebox.load("sounds/pulselow.ogg", "pulselow");
+        Jukebox.load("sounds/saucershoot.ogg", "saucershoot");
+        Jukebox.load("sounds/shoot.ogg", "shoot");
+        Jukebox.load("sounds/smallsaucer.ogg", "smallsaucer");
+        Jukebox.load("sounds/thruster.ogg", "thruster");
     }
 }

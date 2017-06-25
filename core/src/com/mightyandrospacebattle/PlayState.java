@@ -30,6 +30,12 @@ public class PlayState extends GameState {
     private int totalAsteroids;
     private int numAsteroidsLeft;
 
+    private float maxDelay;
+    private float minDelay;
+    private float currentDelay;
+    private float bgTimer;
+    private boolean playLowPulse;
+
     protected PlayState(GameStateManager gsm) {
         super(gsm);
 
@@ -51,6 +57,12 @@ public class PlayState extends GameState {
         level = 1;
         spawnAsteroids();
         hudPlayer = new Player(null);
+        //setup bg music
+        maxDelay = 1;
+        minDelay = 0.25f;
+        currentDelay = maxDelay;
+        bgTimer = maxDelay;
+        playLowPulse = true;
     }
 
     private void initFont() {
@@ -76,6 +88,7 @@ public class PlayState extends GameState {
         int numToSpawn = 4 + level * level - 1;
         totalAsteroids = numToSpawn * 7;
         numAsteroidsLeft = totalAsteroids;
+        currentDelay = maxDelay;
 
         for (int i = 0; i < numToSpawn; i++) {
 
@@ -106,7 +119,6 @@ public class PlayState extends GameState {
         if (asteroids.size() == 0) {
             level++;
             spawnAsteroids();
-
         }
         player.update(dt);
         if (player.isDead()) {
@@ -140,10 +152,20 @@ public class PlayState extends GameState {
         }
         //check collision
         checkCollisions();
+        //play bg music
+        bgTimer += dt;
+        if(!player.isHit() && bgTimer >= currentDelay) {
+            if(playLowPulse) {
+                Jukebox.play("pulselow");
+            } else {
+                Jukebox.play("pulsehigh");
+            }
+            playLowPulse = !playLowPulse;
+            bgTimer = 0;
+        }
     }
 
     private void checkCollisions() {
-
         // player - asteroid collision
         if (!player.isHit()) {
             for (int i = 0; i < asteroids.size(); i++) {
@@ -153,6 +175,7 @@ public class PlayState extends GameState {
                     asteroids.remove(i);
                     i--;
                     splitAsteroids(asteroid);
+                    Jukebox.play("explode");
                     break;
                 }
             }
@@ -169,6 +192,7 @@ public class PlayState extends GameState {
                     j--;
                     splitAsteroids(asteroid);
                     player.incrementScore(asteroid.getScore());
+                    Jukebox.play("explode");
                     break;
                 }
             }
@@ -178,6 +202,7 @@ public class PlayState extends GameState {
     private void splitAsteroids(Asteroid a) {
         createParticles(a.getx(), a.gety());
         numAsteroidsLeft--;
+        currentDelay = ((maxDelay - minDelay) * numAsteroidsLeft / totalAsteroids) + minDelay;
         if (a.getType() == Asteroid.LARGE) {
             asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.MEDIUM));
             asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.MEDIUM));
