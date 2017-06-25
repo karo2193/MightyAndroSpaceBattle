@@ -1,12 +1,9 @@
 package com.mightyandrospacebattle;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
@@ -36,6 +33,10 @@ public class Player extends SpaceObject {
     private Line[] hitLines;
     private Vector2[] hitLinesVector;
 
+    private long score;
+    private int extraLives;
+    private long requiredScore;
+
     public Player(ArrayList<Bullet> bullets) {
 
         this.bullets = bullets;
@@ -58,7 +59,9 @@ public class Player extends SpaceObject {
         radians = (float) Math.PI / 2;
         rotationSpeed = 3;
 
-
+        score = 0;
+        extraLives = 3;
+        requiredScore = 10000;
     }
 
     private void setShape() {
@@ -95,9 +98,24 @@ public class Player extends SpaceObject {
         setShape();
         hit = false;
         dead=false;
-
-
     }
+
+    public long getScore() {
+        return score;
+    }
+
+    public int getExtraLives() {
+        return extraLives;
+    }
+
+    public void loseLife() {
+        extraLives--;
+    }
+
+    public void incrementScore(long l) {
+        score += l;
+    }
+
     public void shoot() {
 
         if (bullets.size() == MAX_BULLETS) {
@@ -161,6 +179,11 @@ public class Player extends SpaceObject {
 
             }
             return;
+        }
+        //check extra lives
+        if (score >= requiredScore) {
+            extraLives++;
+            requiredScore += 10000;
         }
 
         if (AccelerometerReadings.isLeft())

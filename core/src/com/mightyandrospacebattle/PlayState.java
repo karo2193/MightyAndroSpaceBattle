@@ -1,13 +1,14 @@
 package com.mightyandrospacebattle;
 
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 
 import java.util.ArrayList;
-import java.util.jar.Manifest;
 
 /**
  * Created by Michal on 16.06.2017.
@@ -15,7 +16,9 @@ import java.util.jar.Manifest;
 
 public class PlayState extends GameState {
 
+    private SpriteBatch sb;
     private ShapeRenderer sr;
+    private BitmapFont font;
     private Player player;
     private ArrayList<Bullet> bullets;
     private ArrayList<Asteroid> asteroids;
@@ -33,9 +36,12 @@ public class PlayState extends GameState {
 
     @Override
     public void init() {
-
+        sb = new SpriteBatch();
         System.out.println("kom2");
         sr = new ShapeRenderer();
+
+        initFont();
+
         bullets = new ArrayList<Bullet>();
         player = new Player(bullets);
         asteroids = new ArrayList<Asteroid>();
@@ -43,7 +49,16 @@ public class PlayState extends GameState {
         particles = new ArrayList<Particle>();
         level = 1;
         spawnAsteroids();
+    }
 
+    private void initFont() {
+        FreeTypeFontGenerator generator =
+                new FreeTypeFontGenerator(Gdx.files.internal("fonts/hyperspacebold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
+                new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 50;
+        font = generator.generateFont(parameter);
+        generator.dispose();
     }
 
     private void createParticles(float x, float y) {
@@ -85,9 +100,7 @@ public class PlayState extends GameState {
 
     @Override
     public void update(float dt) {
-
         //System.out.println("play state update");
-
         if (asteroids.size() == 0) {
             level++;
             spawnAsteroids();
@@ -96,7 +109,8 @@ public class PlayState extends GameState {
         player.update(dt);
         if (player.isDead()) {
             player.reset();
-
+            player.loseLife();
+            //why without return; ?
         }
         //update player bullets
         for (int i = 0; i < bullets.size(); i++) {
@@ -106,7 +120,6 @@ public class PlayState extends GameState {
                 i--;
             }
         }
-
         //update asteroids
         for (int i = 0; i < asteroids.size(); i++) {
             asteroids.get(i).update(dt);
@@ -123,11 +136,8 @@ public class PlayState extends GameState {
                 i--;
             }
         }
-
-
         //check collision
         checkCollisions();
-
     }
 
     private void checkCollisions() {
@@ -156,6 +166,7 @@ public class PlayState extends GameState {
                     asteroids.remove(j);
                     j--;
                     splitAsteroids(asteroid);
+                    player.incrementScore(asteroid.getScore());
                     break;
                 }
             }
@@ -201,6 +212,11 @@ public class PlayState extends GameState {
             particles.get(i).draw(sr);
         }
 
+        //draw score
+        sb.setColor(1, 1, 1, 1);
+        sb.begin();
+        font.draw(sb, Long.toString(player.getScore()), 40, 700);
+        sb.end();
     }
 
     @Override
