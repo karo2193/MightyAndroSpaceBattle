@@ -11,12 +11,13 @@ public class GameStateManager {
     public static final int HIGHSCORE = 34332;
 
     public GameStateManager() {
-        setState(PLAY);
+        setState(MENU);
     }
 
     public void setState(int state) {
+        if(gameState != null) gameState.dispose();
         if (state == MENU) {
-            // menu state
+            gameState = new MenuState(this);
         }
         if (state == PLAY) {
             gameState = new PlayState(this);
