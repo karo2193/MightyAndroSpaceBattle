@@ -215,6 +215,10 @@ public class PlayState extends GameState {
 
     @Override
     public void draw() {
+
+        sb.setProjectionMatrix(MainGame.cam.combined);
+        sr.setProjectionMatrix(MainGame.cam.combined);
+
         handleInput();
         //System.out.println("play state draw");
         player.draw(sr);

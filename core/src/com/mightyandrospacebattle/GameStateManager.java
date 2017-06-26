@@ -8,6 +8,7 @@ public class GameStateManager {
     private GameState gameState;
     public static final int MENU = 0;
     public static final int PLAY = 354531;
+    public static final int HIGHSCORE = 34332;
 
     public GameStateManager() {
         setState(PLAY);
@@ -20,6 +21,10 @@ public class GameStateManager {
         if (state == PLAY) {
             gameState = new PlayState(this);
         }
+        if (state == HIGHSCORE) {
+            gameState = new HighScoreState(this);
+        }
+
 
     }
 
