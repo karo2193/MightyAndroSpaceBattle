@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class MenuState extends GameState {
 
     private final String PLAY = "Play";
-    private final String HIGHSCORE = "Highscore";
+    private final String HIGHSCORE = "High scores";
     private final String QUIT = "Quit";
 
     private SpriteBatch sb;
@@ -71,7 +71,7 @@ public class MenuState extends GameState {
         buttonHighScore.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // gsm.setState(GameStateManager.HIGHSCORE);
+                gsm.setState(GameStateManager.HIGHSCORE);
             }
         });
         stage.addActor(buttonHighScore);
