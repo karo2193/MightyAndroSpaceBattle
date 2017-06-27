@@ -9,6 +9,7 @@ public class GameStateManager {
     public static final int MENU = 0;
     public static final int PLAY = 354531;
     public static final int HIGHSCORE = 34332;
+    public static final int GAMEOVER = 234662;
 
     public GameStateManager() {
         setState(MENU);
@@ -24,6 +25,9 @@ public class GameStateManager {
         }
         if (state == HIGHSCORE) {
             gameState = new HighScoreState(this);
+        }
+        if (state == GAMEOVER) {
+            gameState = new GameOverState(this);
         }
 
 
