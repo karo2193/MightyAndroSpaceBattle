@@ -104,6 +104,7 @@ public class MenuState extends GameState {
         parameter.size = 60;
         titleFont = generator.generateFont(parameter);
         titleFont.setColor(com.badlogic.gdx.graphics.Color.WHITE);
+        //titleFont.setColor(com.badlogic.gdx.graphics.Color.RED); Easy Q1
         parameter.size = 50;
         font = generator.generateFont(parameter);
     }
