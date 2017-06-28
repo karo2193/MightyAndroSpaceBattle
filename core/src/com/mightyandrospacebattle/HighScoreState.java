@@ -2,6 +2,7 @@ package com.mightyandrospacebattle;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -71,7 +72,12 @@ public class HighScoreState extends GameState {
 
     @Override
     public void handleInput() {
-
+        if(Gdx.input.justTouched()) {
+            gsm.setState(GameStateManager.MENU);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            gsm.setState(GameStateManager.MENU);
+        }
     }
 
     @Override

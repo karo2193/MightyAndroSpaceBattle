@@ -2,6 +2,7 @@ package com.mightyandrospacebattle;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -255,6 +256,9 @@ public class PlayState extends GameState {
     public void handleInput() {
         if (Gdx.app.getInput().justTouched()) {
             player.shoot();
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            gsm.setState(GameStateManager.MENU);
         }
     }
 

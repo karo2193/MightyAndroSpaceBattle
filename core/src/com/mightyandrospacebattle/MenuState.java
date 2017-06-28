@@ -1,12 +1,14 @@
 package com.mightyandrospacebattle;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -40,6 +42,7 @@ public class MenuState extends GameState {
         sb = new SpriteBatch();
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
+        Gdx.input.setCatchBackKey(true);
         initFont();
         initTextButtonStyle();
         initButtons();
@@ -58,6 +61,7 @@ public class MenuState extends GameState {
         buttonPlay.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                disableButtons();
                 gsm.setState(GameStateManager.PLAY);
             }
         });
@@ -71,6 +75,7 @@ public class MenuState extends GameState {
         buttonHighScore.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                disableButtons();
                 gsm.setState(GameStateManager.HIGHSCORE);
             }
         });
@@ -84,6 +89,7 @@ public class MenuState extends GameState {
         buttonQuit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                disableButtons();
                 Gdx.app.exit();
             }
         });
@@ -128,6 +134,9 @@ public class MenuState extends GameState {
     }
 
     public void handleInput() {
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {
+            gsm.setState(GameStateManager.MENU);
+        }
     }
 
     public void dispose() {
@@ -136,6 +145,12 @@ public class MenuState extends GameState {
     private float calculateTextWidth(BitmapFont font, String text) {
         glyphLayout.setText(font, text);
         return glyphLayout.width;
+    }
+
+    private void disableButtons() {
+        buttonPlay.setTouchable(Touchable.disabled);
+        buttonHighScore.setTouchable(Touchable.disabled);
+        buttonQuit.setTouchable(Touchable.disabled);
     }
 }
 
