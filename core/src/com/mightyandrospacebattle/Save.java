@@ -39,10 +39,7 @@ public class Save {
                 init();
                 return;
             }
-            ObjectInputStream in = new ObjectInputStream(
-                    new FileInputStream("highscores.sav")
-
-            );
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("highscores.sav"));
             gd = (GameData) in.readObject();
             in.close();
 
@@ -50,7 +47,6 @@ public class Save {
             e.printStackTrace();
             //Gdx.app.exit();
         }
-
     }
 
     public static boolean saveFileExists() {
@@ -62,8 +58,5 @@ public class Save {
         gd = new GameData();
         gd.init();
         save();
-
-
     }
-
 }

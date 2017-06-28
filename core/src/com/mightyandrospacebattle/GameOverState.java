@@ -1,12 +1,13 @@
 package com.mightyandrospacebattle;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 /**
  * Created by kryguu on 27.06.2017.
@@ -14,15 +15,22 @@ import com.sun.org.apache.xpath.internal.operations.String;
 
 public class GameOverState extends GameState {
 
+    private final String NAME = "name";
+    private final String GAME_OVER = "Game Over";
+    private final String NEW_HIGH_SCORE = "New High Score";
+
     private SpriteBatch sb;
-    private ShapeRenderer sr;
+    private Stage stage;
 
     private boolean newHighscore;
-    private char[] newName;
-    private int currentChar;
+    private String newHighscoreText;
 
     private BitmapFont gameOverFont;
     private BitmapFont font;
+    private GlyphLayout glyphLayout;
+    private float textWidth;
+    private TextField nameField;
+    private TextField.TextFieldStyle textFieldStyle;
 
     public GameOverState(GameStateManager gsm) {
         super(gsm);
@@ -32,21 +40,39 @@ public class GameOverState extends GameState {
     public void init() {
 
         sb = new SpriteBatch();
-        sr = new ShapeRenderer();
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+        glyphLayout = new GlyphLayout();
+
+        initFonts();
 
         newHighscore = Save.gd.isHighScore(Save.gd.getTentativeScore());
         if (newHighscore) {
-            newName = new char[] {'A','A','A'};
-            currentChar = 0;
+            initTextField();
         }
+    }
 
-        FreeTypeFontGenerator gen = new FreeTypeFontGenerator(
-                Gdx.files.internal("fonts/Hyperspace Bold.ttf")
-        );
-        gameOverFont = gen.generateFont(32);
-        font = gen.generateFont(32);
-
-
+    private void initTextField() {
+        textFieldStyle = new TextField.TextFieldStyle();
+        textFieldStyle.font = gameOverFont;
+        textFieldStyle.fontColor = Color.WHITE;
+        nameField = new TextField("name", textFieldStyle);
+        nameField.setWidth(300);
+        nameField.setPosition((MainGame.WIDTH - 300) / 2, 400);
+        nameField.setMaxLength(6);
+        nameField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                if (c == '\n') {
+                    if (newHighscore) {
+                        Save.gd.addHighScore(Save.gd.getTentativeScore(), textField.getText());
+                        Save.save();
+                    }
+                    gsm.setState(GameStateManager.MENU);
+                }
+            }
+        });
+        stage.addActor(nameField);
     }
 
     @Override
@@ -56,48 +82,54 @@ public class GameOverState extends GameState {
 
     @Override
     public void draw() {
+        stage.draw();
         sb.setProjectionMatrix(MainGame.cam.combined);
         sb.begin();
 
-        java.lang.String s;
-        float w;
-        s = "Game Over";
-        GlyphLayout layout = new GlyphLayout(); //dont do this every frame! Store it as member
-        layout.setText(gameOverFont, (CharSequence) s);
-        w = layout.width;
-        gameOverFont.draw(sb, s, (MainGame.WIDTH - w) / 2, 200);
+        calculateTextWidth(gameOverFont, GAME_OVER);
+        gameOverFont.draw(sb, GAME_OVER, (MainGame.WIDTH - textWidth) / 2, 650);
 
         if (!newHighscore) {
             sb.end();
             return;
         }
 
-        s = "New High Score: " + Save.gd.getTentativeScore();
-        layout.setText(gameOverFont, (CharSequence) s);
-        w = layout.width;
-        gameOverFont.draw(sb, s, (MainGame.WIDTH - w) / 2, 180);
-
-        for (int i = 0; i < newName.length; i++) {
-            font.draw(sb, Character.toString(newName[i]), 230 + 14 * i, 120);
-        }
+        newHighscoreText = NEW_HIGH_SCORE + Save.gd.getTentativeScore();
+        calculateTextWidth(gameOverFont, newHighscoreText);
+        gameOverFont.draw(sb, newHighscoreText, (MainGame.WIDTH - textWidth) / 2, 550);
 
         sb.end();
+    }
 
-        sr.begin(ShapeRenderer.ShapeType.Line);
-        sr.line(230 + 14 * currentChar, 100,
-                244 + 14 * currentChar, 100);
-        sr.end();
+    private void initFonts() {
+        FreeTypeFontGenerator generator =
+                new FreeTypeFontGenerator(Gdx.files.internal("fonts/hyperspacebold.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter =
+                new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 60;
+        gameOverFont = generator.generateFont(parameter);
+        gameOverFont.setColor(Color.WHITE);
+        parameter.size = 50;
+        font = generator.generateFont(parameter);
+        font.setColor(Color.WHITE);
+    }
 
+    private void calculateTextWidth(BitmapFont font, String text) {
+        glyphLayout.setText(font, text);
+        textWidth = glyphLayout.width;
     }
 
     @Override
     public void handleInput() {
+        if (!newHighscore) {
+            if (Gdx.app.getInput().justTouched()) {
+                gsm.setState(GameStateManager.MENU);
+            }
+        }
     }
 
     @Override
     public void dispose() {
 
     }
-
-
 }

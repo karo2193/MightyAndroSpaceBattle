@@ -115,8 +115,7 @@ public class PlayState extends GameState {
 
     @Override
     public void update(float dt) {
-        //System.out.println("play state update");
-        if (asteroids.size() == 0) {
+        if (asteroids.isEmpty()) {
             level++;
             spawnAsteroids();
         }
@@ -124,13 +123,13 @@ public class PlayState extends GameState {
         if (player.isDead()) {
             if (player.getExtraLives() == 0) {
                 Jukebox.stopAll();
+                Save.load();
                 Save.gd.setTentativeScore(player.getScore());
                 gsm.setState(GameStateManager.GAMEOVER);
                 return;
             }
             player.reset();
             player.loseLife();
-            //why without return; ?
         }
         //update player bullets
         for (int i = 0; i < bullets.size(); i++) {
@@ -160,8 +159,8 @@ public class PlayState extends GameState {
         checkCollisions();
         //play bg music
         bgTimer += dt;
-        if(!player.isHit() && bgTimer >= currentDelay) {
-            if(playLowPulse) {
+        if (!player.isHit() && bgTimer >= currentDelay) {
+            if (playLowPulse) {
                 Jukebox.play("pulselow");
             } else {
                 Jukebox.play("pulsehigh");

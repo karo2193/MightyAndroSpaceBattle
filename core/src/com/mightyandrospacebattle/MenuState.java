@@ -23,6 +23,7 @@ public class MenuState extends GameState {
     private SpriteBatch sb;
     private BitmapFont titleFont;
     private BitmapFont font;
+    private GlyphLayout glyphLayout;
     private final String title = "Mighty Andro Space Battle";
 
     Stage stage;
@@ -48,12 +49,11 @@ public class MenuState extends GameState {
         createButtonPlay();
         createButtonHighscore();
         createButtonQuit();
-
     }
 
     private void createButtonPlay() {
         buttonPlay = new TextButton(PLAY, textButtonStyle);
-        float width = calculateWidth(font, PLAY);
+        float width = calculateTextWidth(font, PLAY);
         buttonPlay.setPosition((MainGame.WIDTH - width) / 2, 450);
         buttonPlay.addListener(new ClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class MenuState extends GameState {
 
     private void createButtonHighscore() {
         buttonHighScore = new TextButton(HIGHSCORE, textButtonStyle);
-        float width = calculateWidth(font, HIGHSCORE);
+        float width = calculateTextWidth(font, HIGHSCORE);
         buttonHighScore.setPosition((MainGame.WIDTH - width) / 2, 370);
         buttonHighScore.addListener(new ClickListener() {
             @Override
@@ -79,7 +79,7 @@ public class MenuState extends GameState {
 
     private void createButtonQuit() {
         buttonQuit = new TextButton(QUIT, textButtonStyle);
-        float width = calculateWidth(font, QUIT);
+        float width = calculateTextWidth(font, QUIT);
         buttonQuit.setPosition((MainGame.WIDTH - width) / 2, 290);
         buttonQuit.addListener(new ClickListener() {
             @Override
@@ -96,6 +96,7 @@ public class MenuState extends GameState {
     }
 
     private void initFont() {
+        glyphLayout = new GlyphLayout();
         FreeTypeFontGenerator generator =
                 new FreeTypeFontGenerator(Gdx.files.internal("fonts/hyperspacebold.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter =
@@ -115,7 +116,7 @@ public class MenuState extends GameState {
         stage.draw();
         sb.setProjectionMatrix(MainGame.cam.combined);
         sb.begin();
-        float width = calculateWidth(titleFont, title);
+        float width = calculateTextWidth(titleFont, title);
         titleFont.draw(sb, title, (MainGame.WIDTH - width) / 2, 600);
         sb.end();
     }
@@ -126,10 +127,9 @@ public class MenuState extends GameState {
     public void dispose() {
     }
 
-    private float calculateWidth(BitmapFont font, String text) {
-        GlyphLayout glyphLayout = new GlyphLayout(font, text);
-        float width = glyphLayout.width;
-        return width;
+    private float calculateTextWidth(BitmapFont font, String text) {
+        glyphLayout.setText(font, text);
+        return glyphLayout.width;
     }
 }
 
