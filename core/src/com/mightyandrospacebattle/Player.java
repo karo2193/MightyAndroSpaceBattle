@@ -60,7 +60,8 @@ public class Player extends SpaceObject {
         rotationSpeed = 3;
 
         score = 0;
-        extraLives = 0;
+        extraLives = 3;
+        //extraLives = 5; Easy Q2
         requiredScore = 10000;
     }
 
