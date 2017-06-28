@@ -12,6 +12,11 @@ import java.util.HashMap;
 public class Jukebox {
     private static HashMap<String, Sound> sounds;
 
+    //Medium Q3 - change sounds.
+    //Get sound from google
+    //Put it into /assets/sounds
+    //Find Usages Jukebox (Player and PlayState) -> play('string')
+    //Shift file in Jukebox.load with correct 'string'
     static {
         sounds = new HashMap<String, Sound>();
     }
