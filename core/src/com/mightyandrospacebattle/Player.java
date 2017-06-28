@@ -57,7 +57,8 @@ public class Player extends SpaceObject {
         hitTime = 2;
 
         radians = (float) Math.PI / 2;
-        rotationSpeed = 3;
+        rotationSpeed = 2;
+       // rotationSpeed = 6; Easy Q4
 
         score = 0;
         extraLives = 3;
