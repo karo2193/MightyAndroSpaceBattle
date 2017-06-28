@@ -1,0 +1,20 @@
+£atwe:
+1. Zmieniæ kolor czcionki tytu³u gry.
+2. Zmieniæ pocz¹tkow¹ liczbê ¿yæ.
+3. Zmieniæ iloœæ punktów, po których dostaje siê nowe ¿ycie.
+4. Zmieniæ szybkoœæ obrotu statku.
+5. Zmieniæ iloœæ pocz¹tkowych komet.
+
+Œrednia:
+1. Zmieniæ kszta³t komet.
+2. Zmieniæ wielkoœæ statku.
+3. Zmieniæ odtwarzan¹ melodiê w dowolnie wybranym momencie (œci¹gn¹æ now¹ melodiê).
+4. Zmieniæ czcionkê elementów znajduj¹cych siê na pocz¹tkowym ekranie (œci¹gn¹æ nowy font).
+5. Zabezpieczyæ mo¿liwoœæ wprowadzenia imienia ze spacjami i ograniczyæ iloœæ wprowadzanych znaków.
+
+Trudna:
+1. Dodaæ hamowanie statku po przechyleniu ekranu w górê, a przyspieszenie po przechyleniu w dó³.
+2. Strzelanie w randomowych kierunkach po klikniêciu.
+3. Strzelanie w miejsce klikniêcia przez u¿ytkownika.
+4. Dodaæ dodatkow¹ wielkoœæ asteroidy.
+5. Dodaæ losowe strzelanie przez losow¹ asteroidê.
