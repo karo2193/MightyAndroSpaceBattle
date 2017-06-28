@@ -21,12 +21,12 @@ class Bullet extends SpaceObject{
         this.radians = radians;
 
         float speed = 350;
-
+        // speed = 700; Medium Q2
         dx = MathUtils.cos(radians) * speed;
         dy = MathUtils.sin(radians) * speed;
 
-        width = 2;
-        height = 2;
+        width = 2; // = 3 Medium Q2
+        height = 2; // = 6 Medium Q2
 
         lifeTimer = 0;
         lifeTime = 1;

@@ -80,10 +80,21 @@ public class Player extends SpaceObject {
         shapex[3] = x + MathUtils.cos(radians + 4 * MathUtils.PI / 5) * 8;
         shapey[3] = y + MathUtils.sin(radians + 4 * MathUtils.PI / 5) * 8;
 
+//        +++++ changes in Bullet -> Medium Q2
+//        shapex[0] = x + MathUtils.cos(radians) * 24; Medium Q2
+//        shapey[0] = y + MathUtils.sin(radians) * 24; Medium Q2
+//
+//        shapex[1] = x + MathUtils.cos(radians - 4 * MathUtils.PI / 5) * 24; Medium Q2
+//        shapey[1] = y + MathUtils.sin(radians - 4 * MathUtils.PI / 5) * 24; Medium Q2
+//
+//        shapex[2] = x + MathUtils.cos(radians + MathUtils.PI) * 15; Medium Q2
+//        shapey[2] = y + MathUtils.sin(radians + MathUtils.PI) * 15; Medium Q2
+//
+//        shapex[3] = x + MathUtils.cos(radians + 4 * MathUtils.PI / 5) * 24; Medium Q2
+//        shapey[3] = y + MathUtils.sin(radians + 4 * MathUtils.PI / 5) * 24; Medium Q2
     }
 
     private void setFlame() {
-
         flamex[0] = x + MathUtils.cos(radians - 5 * MathUtils.PI / 6) * 5;
         flamey[0] = y + MathUtils.sin(radians - 5 * MathUtils.PI / 6) * 5;
 
@@ -93,6 +104,14 @@ public class Player extends SpaceObject {
         flamex[2] = x + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 5;
         flamey[2] = y + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 5;
 
+//        flamex[0] = x + MathUtils.cos(radians - 5 * MathUtils.PI / 6) * 15; Medium Q2
+//        flamey[0] = y + MathUtils.sin(radians - 5 * MathUtils.PI / 6) * 15; Medium Q2
+//
+//        flamex[1] = x + MathUtils.cos(radians - MathUtils.PI) * 3 * (6 + acceleratingTimer * 50); Medium Q2
+//        flamey[1] = y + MathUtils.sin(radians - MathUtils.PI) * 3 * (6 + acceleratingTimer * 50); Medium Q2
+//
+//        flamex[2] = x + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 15; Medium Q2
+//        flamey[2] = y + MathUtils.cos(radians + 5 * MathUtils.PI / 6) * 15; Medium Q2
     }
 
     public void reset(){
