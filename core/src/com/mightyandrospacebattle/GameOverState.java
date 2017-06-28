@@ -2,6 +2,7 @@ package com.mightyandrospacebattle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -59,7 +60,7 @@ public class GameOverState extends GameState {
         nameField = new TextField("name", textFieldStyle);
         nameField.setWidth(300);
         nameField.setPosition((MainGame.WIDTH - 300) / 2, 400);
-        nameField.setMaxLength(6);
+        //nameField.setMaxLength(6); Medium Q5
         nameField.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
             public void keyTyped(TextField textField, char c) {
@@ -70,6 +71,10 @@ public class GameOverState extends GameState {
                     }
                     gsm.setState(GameStateManager.MENU);
                 }
+//                if(c == ' ') { Medium Q5
+//                    textField.setText(textField.getText().replace(" ", "")); Medium Q5
+//                    nameField.setCursorPosition(textField.getText().length()); Medium Q5
+//                }
             }
         });
         stage.addActor(nameField);
