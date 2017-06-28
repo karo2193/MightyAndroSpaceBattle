@@ -29,17 +29,23 @@ class Asteroid extends SpaceObject {
 
         if (type == SMALL) {
             numPoints = 8;
+            //numPoints = 3; Medium Q1
             width = height = 12;
+            //width = height = 20; Medium Q1
             speed = MathUtils.random(70, 100);
             score = 100;
         } else if (type == MEDIUM) {
             numPoints = 10;
+            //numPoints = 4; Medium Q1
             width = height = 20;
+            //width = height = 40; Medium Q1
             speed = MathUtils.random(40, 60);
             score = 50;
         } else if (type == LARGE) {
             numPoints = 12;
+            //numPoints = 6; Medium Q1
             width = height = 40;
+            //width = height = 60; Medium Q1
             speed = MathUtils.random(20, 30);
             score = 20;
         }
