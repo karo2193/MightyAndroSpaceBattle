@@ -76,7 +76,6 @@ public class PlayState extends GameState {
     }
 
     private void createParticles(float x, float y) {
-
         for (int i = 0; i < 6; i++)
             particles.add(new Particle(x, y));
     }
@@ -86,6 +85,7 @@ public class PlayState extends GameState {
         asteroids.clear();
 
         int numToSpawn = 4 + level * level - 1;
+        //int numToSpawn = 2 + level * level - 1; Easy Q5
         totalAsteroids = numToSpawn * 7;
         numAsteroidsLeft = totalAsteroids;
         currentDelay = maxDelay;
