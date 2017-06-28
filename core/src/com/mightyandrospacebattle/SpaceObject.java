@@ -68,8 +68,5 @@ public class SpaceObject {
         if (x > MainGame.WIDTH) x = 0;
         if (y < 0) y = MainGame.HEIGHT;
         if (y > MainGame.HEIGHT) y = 0;
-
-
     }
-
 }

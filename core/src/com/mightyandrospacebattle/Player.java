@@ -57,11 +57,14 @@ public class Player extends SpaceObject {
         hitTime = 2;
 
         radians = (float) Math.PI / 2;
-        rotationSpeed = 3;
+        rotationSpeed = 2;
+       // rotationSpeed = 6; Easy Q4
 
         score = 0;
-        extraLives = 0;
-        requiredScore = 10000;
+        extraLives = 3;
+        //extraLives = 5; Easy Q2
+        requiredScore = 100;
+        //requiredScore = 2000; Easy Q3
     }
 
     private void setShape() {
@@ -183,7 +186,8 @@ public class Player extends SpaceObject {
         //check extra lives
         if (score >= requiredScore) {
             extraLives++;
-            requiredScore += 10000;
+            requiredScore += 100;
+            //requiredScore += 2000; Easy Q3
             Jukebox.play("extralife");
         }
 
