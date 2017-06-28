@@ -96,6 +96,11 @@ public class MenuState extends GameState {
     }
 
     private void initFont() {
+        //Medium Q4:
+        //Get new font - google
+        //Put it into /assets/fonts
+        //Change file name in generator:
+        //FreeTypeFontGenerator(Gdx.files.internal("fonts/hyperspacebold.ttf"));
         glyphLayout = new GlyphLayout();
         FreeTypeFontGenerator generator =
                 new FreeTypeFontGenerator(Gdx.files.internal("fonts/hyperspacebold.ttf"));
