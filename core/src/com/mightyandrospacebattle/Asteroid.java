@@ -13,6 +13,7 @@ class Asteroid extends SpaceObject {
     public static final int SMALL = 0;
     public static final int MEDIUM = 1;
     public static final int LARGE = 2;
+    //public static final int VERY_LARGE = 3; // Hard Q4
 
     private int numPoints;
     private float[] dists;
@@ -49,6 +50,34 @@ class Asteroid extends SpaceObject {
             speed = MathUtils.random(20, 30);
             score = 20;
         }
+
+        // Hard Q4
+//        switch(type) {
+//            case SMALL:
+//                numPoints = 8;
+//                width = height = 12;
+//                speed = MathUtils.random(70, 100);
+//                score = 100;
+//                break;
+//            case MEDIUM:
+//                numPoints = 10;
+//                width = height = 20;
+//                speed = MathUtils.random(40, 60);
+//                score = 60;
+//                break;
+//            case LARGE:
+//                numPoints = 12;
+//                width = height = 40;
+//                speed = MathUtils.random(20, 30);
+//                score = 30;
+//                break;
+//            case VERY_LARGE:
+//                numPoints = 14;
+//                width = height = 60;
+//                speed = MathUtils.random(10, 15);
+//                score = 10;
+//                break;
+//        }
 
         rotationSpeed = MathUtils.random(-1, 1);
         radians = MathUtils.random(2 * MathUtils.PI);

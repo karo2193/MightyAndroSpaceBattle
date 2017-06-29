@@ -110,6 +110,7 @@ public class PlayState extends GameState {
             }
 
             asteroids.add(new Asteroid(x, y, Asteroid.LARGE));
+            //asteroids.add(new Asteroid(x, y, Asteroid.VERY_LARGE)); // Hard Q4
         }
 
     }
@@ -209,6 +210,11 @@ public class PlayState extends GameState {
         createParticles(a.getx(), a.gety());
         numAsteroidsLeft--;
         currentDelay = ((maxDelay - minDelay) * numAsteroidsLeft / totalAsteroids) + minDelay;
+        // Hard Q4
+//        if (a.getType() == Asteroid.VERY_LARGE) {
+//            asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.LARGE));
+//            asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.LARGE));
+//        }
         if (a.getType() == Asteroid.LARGE) {
             asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.MEDIUM));
             asteroids.add(new Asteroid(a.getx(), a.gety(), Asteroid.MEDIUM));
