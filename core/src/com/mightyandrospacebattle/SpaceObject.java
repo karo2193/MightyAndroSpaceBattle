@@ -10,6 +10,8 @@ import com.badlogic.gdx.Game;
 public class SpaceObject {
     protected float x;
     protected float y;
+//    protected float endX; Hard Q3
+//    protected float endY; Hard Q3
     protected float dx;
     protected float dy;
     protected float radians;

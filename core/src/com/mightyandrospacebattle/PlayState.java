@@ -255,6 +255,7 @@ public class PlayState extends GameState {
     @Override
     public void handleInput() {
         if (Gdx.app.getInput().justTouched()) {
+            // Hard Q3: player.shoot(Gdx.app.getInput().getX(), Gdx.app.getInput().getY());
             player.shoot();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)) {

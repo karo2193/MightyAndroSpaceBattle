@@ -33,6 +33,28 @@ class Bullet extends SpaceObject{
 
     }
 
+    // Hard Q3
+//    public Bullet(float x, float y, float endX, float endY) {
+//        this.x = x;
+//        this.y = y;
+//        this.endX = endX;
+//        this.endY = endY;
+//
+//        float vX = endX - x;
+//        float vY = y - endY;
+//        float normvX = vX / (float) Math.sqrt(Math.pow(vX, 2) + Math.pow(vY, 2));
+//        float normvY = vY / (float) Math.sqrt(Math.pow(vX, 2) + Math.pow(vY, 2));
+//
+//        float speed = 350;
+//        dx = normvX * speed;
+//        dy = normvY * speed;
+//
+//        width = 2;
+//        height = 2;
+//        lifeTimer = 0;
+//        lifeTime = 1;
+//    }
+
     public boolean shouldRemove() {
         return remove;
     }

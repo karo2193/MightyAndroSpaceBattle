@@ -144,9 +144,11 @@ public class Player extends SpaceObject {
         score += l;
     }
 
+    // Hard Q3: shoot(int touchX, int touchY)
     public void shoot() {
         if (bullets.size() == MAX_BULLETS) return;
-        bullets.add(new Bullet(x, y, radians));
+        bullets.add(new Bullet(this.x, this.y, radians));
+        //bullets.add(new Bullet(this.x, this.y, touchX, touchY)); Hard Q3
         Jukebox.play("shoot");
         // Hard Q2
 //        int numberOfBullets = MathUtils.random(MAX_BULLETS) + 1;
