@@ -115,8 +115,8 @@ public class Player extends SpaceObject {
     }
 
     public void reset(){
-        x= MainGame.WIDTH/2;
-        y=MainGame.HEIGHT/2;
+        x = MainGame.WIDTH/2;
+        y = MainGame.HEIGHT/2;
         setShape();
         hit = false;
         dead=false;
@@ -224,6 +224,29 @@ public class Player extends SpaceObject {
         } else {
             acceleratingTimer = 0;
         }
+        ////Hard Q1
+//        if (AccelerometerReadings.isDown()) {
+//            dx += MathUtils.cos(radians) * acceleration * dt;
+//            dy += MathUtils.sin(radians) * acceleration * dt;
+//            acceleratingTimer += dt;
+//            if (acceleratingTimer > 0.1f) {
+//                acceleratingTimer = 0;
+//            }
+//        } else if (AccelerometerReadings.isUp()) {
+//            if(Math.abs(dx) <= Math.abs(MathUtils.cos(radians) * deceleration) || Math.abs(dy) <= Math.abs(MathUtils.sin(radians) * deceleration)) {
+//                dx = 0;
+//                dy = 0;
+//            } else {
+//                dx -= MathUtils.cos(radians) * deceleration;
+//                dy -= MathUtils.sin(radians) * deceleration;
+//            }
+//            acceleratingTimer += dt;
+//            if (acceleratingTimer > 0.1f) {
+//                acceleratingTimer = 0;
+//            }
+//        } else {
+//            acceleratingTimer = 0;
+//        }
         float vec = (float) Math.sqrt(dx * dx + dy * dy);
         if (vec > 0) {
             dx -= (dx / vec) * deceleration * dt;
@@ -237,6 +260,7 @@ public class Player extends SpaceObject {
         x += dx * dt;
         y += dy * dt;
         setShape();
+        //Hard Q1 - isDown()
         if (AccelerometerReadings.isUp()) {
             setFlame();
             //Jukebox.loop("thruster"); + after hit stop sound
@@ -272,6 +296,7 @@ public class Player extends SpaceObject {
         }
 
         //draw flames
+        //Hard Q1 - isDown()
         if (AccelerometerReadings.isUp()) {
             for (int i = 0, j = flamex.length - 1; i < flamex.length; j = i++) {
                 sr.line(flamex[i], flamey[i], flamex[j], flamey[j]);

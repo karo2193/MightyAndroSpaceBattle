@@ -17,6 +17,15 @@ public class AccelerometerReadings {
         if (result) System.out.println("gora");
         return result;
     }
+////Hard Q1
+//    public static boolean isDown() {
+//        float x = Gdx.input.getAccelerometerX();
+//        float y = Gdx.input.getAccelerometerY();
+//
+//        boolean result = x < -2 && Math.abs(x) > Math.abs(y);
+//        if (result) System.out.println("dol");
+//        return result;
+//    }
 
     public static boolean isRight() {
 
