@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Michal on 16.06.2017.
@@ -91,7 +92,7 @@ public class PlayState extends GameState {
         numAsteroidsLeft = totalAsteroids;
         currentDelay = maxDelay;
 
-        for (int i = 0; i < numToSpawn; i++) {
+        for (int i = 0; i < numToSpawn ; i++) {
 
             float x = MathUtils.random(Gdx.graphics.getWidth());
             float y = MathUtils.random(Gdx.graphics.getHeight());
@@ -121,7 +122,16 @@ public class PlayState extends GameState {
             level++;
             spawnAsteroids();
         }
+
+        //Hard Q5
+//        if (!asteroids.isEmpty()){
+//            Random generator = new Random();
+//            int index = generator.nextInt(asteroids.size());
+//            player.setRandomAsteroidLocation(asteroids.get(index).getx(),asteroids.get(index).gety());
+//
+//        }
         player.update(dt);
+
         if (player.isDead()) {
             if (player.getExtraLives() == 0) {
                 Jukebox.stopAll();

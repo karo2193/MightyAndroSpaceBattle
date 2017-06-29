@@ -38,6 +38,8 @@ public class Player extends SpaceObject {
     private int extraLives;
     private long requiredScore;
 
+    //private float randomAsteroidX = 0, randomAsteroidY = 0; HardQ5
+
     public Player(ArrayList<Bullet> bullets) {
 
         this.bullets = bullets;
@@ -66,6 +68,8 @@ public class Player extends SpaceObject {
         //extraLives = 5; Easy Q2
         requiredScore = 100;
         //requiredScore = 2000; Easy Q3
+
+
     }
 
     private void setShape() {
@@ -149,6 +153,7 @@ public class Player extends SpaceObject {
         if (bullets.size() == MAX_BULLETS) return;
         bullets.add(new Bullet(this.x, this.y, radians));
         //bullets.add(new Bullet(this.x, this.y, touchX, touchY)); Hard Q3
+        //bullets.add(new Bullet(this.x, this.y, randomAsteroidX,randomAsteroidY)); Hard Q5
         Jukebox.play("shoot");
         // Hard Q2
 //        int numberOfBullets = MathUtils.random(MAX_BULLETS) + 1;
@@ -327,5 +332,12 @@ public class Player extends SpaceObject {
     public boolean isDead() {
         return dead;
     }
+
+    //Hard Q5
+//    public void setRandomAsteroidLocation(float getx, float gety) {
+//
+//        randomAsteroidX = getx;
+//        randomAsteroidY = gety;
+//    }
 }
 

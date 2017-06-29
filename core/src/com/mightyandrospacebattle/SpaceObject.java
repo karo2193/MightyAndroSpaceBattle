@@ -12,6 +12,11 @@ public class SpaceObject {
     protected float y;
 //    protected float endX; Hard Q3
 //    protected float endY; Hard Q3
+
+//    protected float endX; Hard Q5
+//    protected float endY; Hard Q5
+
+
     protected float dx;
     protected float dy;
     protected float radians;
