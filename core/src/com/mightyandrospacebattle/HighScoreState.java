@@ -19,6 +19,7 @@ public class HighScoreState extends GameState {
 
     private SpriteBatch sb;
 
+    private BitmapFont titleFont;
     private BitmapFont font;
 
     private long[] highScores;
@@ -37,7 +38,9 @@ public class HighScoreState extends GameState {
                 new FreeTypeFontGenerator(Gdx.files.internal("fonts/hyperspacebold.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter =
                 new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 25;
+        parameter.size = 60;
+        titleFont = generator.generateFont(parameter);
+        parameter.size = 45;
         font = generator.generateFont(parameter);
         generator.dispose();
         Save.load();
@@ -57,15 +60,14 @@ public class HighScoreState extends GameState {
         String s = "High Scores";
         float w;
 
-
         layout.setText(font, s);
         w = layout.width;
-        font.draw(sb, s, (MainGame.WIDTH - w) / 2, 300);
+        titleFont.draw(sb, s, (MainGame.WIDTH - w) / 2, 600);
         for (int i = 0; i < highScores.length; i++) {
-            s = String.format("%2d. %7s %s", i + 1, highScores[i], names[i]);
+            s = String.format("%2d. %2s %s", i + 1, highScores[i], names[i]);
             layout.setText(font, s);
             w = layout.width;
-            font.draw(sb, s, (MainGame.WIDTH - w) / 2, 280 - 25 * i);
+            font.draw(sb, s, (MainGame.WIDTH - w) / 2, 500 - 50 * i);
         }
         sb.end();
     }
