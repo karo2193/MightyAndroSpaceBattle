@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Player extends SpaceObject {
 
     private final int MAX_BULLETS = 4;
+    //private final int MAX_BULLETS = 6; Hard Q2
 
     private ArrayList<Bullet> bullets;
 
@@ -147,6 +148,18 @@ public class Player extends SpaceObject {
         if (bullets.size() == MAX_BULLETS) return;
         bullets.add(new Bullet(x, y, radians));
         Jukebox.play("shoot");
+        // Hard Q2
+//        int numberOfBullets = MathUtils.random(MAX_BULLETS) + 1;
+//        for( int i = 0; i < numberOfBullets ; i++) {
+//            if (bullets.size() == MAX_BULLETS) {
+//                if(i>0)
+//                    Jukebox.play("shoot");
+//                return;
+//            }
+//            float rand = MathUtils.random(2 * MathUtils.PI);
+//            bullets.add(new Bullet(x, y, rand));
+//        }
+//        Jukebox.play("shoot");
     }
 
     public void hit() {
