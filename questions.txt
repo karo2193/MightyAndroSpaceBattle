@@ -17,4 +17,4 @@ Trudna:
 2. Strzelanie w randomowych kierunkach randomow¹ iloœci¹ naboi.
 3. Strzelanie w miejsce klikniêcia przez u¿ytkownika.
 4. Dodaæ dodatkow¹ wielkoœæ asteroidy.
-5. Dodaæ losowe strzelanie przez losow¹ asteroidê.
+5. Dodaæ strzelanie w kierunku losowej asteroidy.
